@@ -1,0 +1,39 @@
+// Hey, Max her
+// Jeg har kigget alle billeder igennem for:
+	1. Bekræfte billeder er af katte/hunde
+	2. Få et ordenligt læs dopamin
+	3. Dokumentere fejl og findings
+
+// I dette Dokument kan du finde mine observationer, så vi kan lære af det.
+// Opdatering: jeg anvender i stedet et excel ark, da jeg begyndte at være for ambitiøs med features, og dokumentet som resultat blev uoverskuelig
+// Checket indtil cat.825
+
+// Katte billeder uden katte:
+	cat92
+	
+// Hunde billeder uden hunde:
+
+// Billeder med katte genstande
+	cat92
+	cat354
+	
+// Billeder med tegnede hunde
+	cat92
+
+// Billeder med hund og katte
+	cat724
+	
+// Cluster billeder (billeder der indeholder flere billeder)
+	cat712
+
+// Slørede billeder
+	cat0
+	cat156
+	cat241
+	
+// Billeder med meget tekst
+	cat 149
+	
+// Billeder med memes
+	cat157
+	cat343
