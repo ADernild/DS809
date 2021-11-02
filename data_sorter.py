@@ -39,5 +39,5 @@ for file in os.listdir(dir):
 os.remove('data/ico') # Fjerner mappen ico, der indeholder en .ico fil
 
 #%% Splitter mapper i test, train og val
-splitfolders.ratio(dir, output=dir, seed=42069, ratio=(.8, .1, .1))
+splitfolders.ratio(dir, output=dname, seed=1338, ratio=(.8, .1, .1))
 
