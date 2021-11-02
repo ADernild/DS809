@@ -41,3 +41,28 @@ os.remove('data/ico') # Fjerner mappen ico, der indeholder en .ico fil
 #%% Splitter mapper i test, train og val
 splitfolders.ratio(dir, output=dir, seed=42069, ratio=(.8, .1, .1))
 
+
+#%% Image generator to generate more images (turned, mirror, remove color canals, explode clusters)
+
+#%% - Create vizualization examples for each type of generated image
+
+#%% Model
+
+#%% - Train
+
+#%% - Validation
+
+#%% - Test
+
+#%% - Save model
+
+#%% Stats
+#%% - Accuracy cats
+
+#%% - Accuracy dogs
+
+#%% Adjust misclasifications
+
+#%% Create vizualisations of model aspects
+
+
