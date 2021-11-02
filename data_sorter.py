@@ -42,7 +42,7 @@ os.remove('data/ico') # Fjerner mappen ico, der indeholder en .ico fil
 splitfolders.ratio(dir, output=dname, seed=1338, ratio=(.8, .1, .1))
 
 
-#%% Image generator to generate more images (turned, mirror, remove color canals, explode clusters)
+#%% Image generator to generate more images (turned, mirror, remove color canals, explode clusters, alpha channel)
 
 #%% - Create vizualization examples for each type of generated image
 
