@@ -10,9 +10,14 @@ import os
 import shutil
 import splitfolders
 
+# Set path to this file location
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 #%% Opdeling af hunde og katte
 # Path til data
-dir = 'Data_science/3_semester/DL/project/data/'
+dir = 'data/'
 
 # Looper gennem filer
 for file in os.listdir(dir):
