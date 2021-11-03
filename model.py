@@ -17,6 +17,8 @@ from numpy import asarray
 import datetime
 from keras import layers, losses
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+from keras.layers import Dense, Activation
 from tqdm import tqdm
 from glob import glob
 from shutil import copy, move
@@ -59,7 +61,7 @@ imagey = 200
 image_size = [imagex + imagey]
 batch = 30
 
-train_data_gen = ImageDataGenerator(rotation_range=40, rescale=1./255, shear_range=0.1, zoom_range=0.2, color_mode = "rgba" ,horizontal_flip= False, vertical_flip=True, width_shift_range=0.1, height_shift_range=0.1,)
+train_data_gen = ImageDataGenerator(rotation_range=40, rescale=1./255, shear_range=0.1, zoom_range=0.2, horizontal_flip= False, vertical_flip=True, width_shift_range=0.1, height_shift_range=0.1,)
 train_gen = train_data_gen.flow_from_dataframe(training_df, "./train", x_col='filename', y_col='category', target_size=image_size, class_mode='categorical', batch_size=batch)
 
 
