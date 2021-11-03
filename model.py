@@ -65,15 +65,9 @@ train_data_gen = ImageDataGenerator(rotation_range=40, rescale=1./255, shear_ran
 train_gen = train_data_gen.flow_from_dataframe(training_df, "./train", x_col='filename', y_col='category', target_size=image_size, class_mode='categorical', batch_size=batch)
 
 
-
-#imagex = 200
-#imagey = 200
-#image_size = [imagex + imagey] # Moved up
-#batch = 30
-
 model = keras.Sequential()
         #Layers, Pooling, Dropout and Density
-layers.Conv2D(32, 3, padding='same', activation='relu', input_shape=(imagex, imagey, 3)),
+layers.Conv2D(32, 3, padding='same', activation='relu', input_shape=(image_size, 3)),
 layers.Conv2D(32, 3, padding='same', activation='relu'),
 layers.MaxPooling2D(2,2),
 layers.Dropout(0.2),
@@ -89,7 +83,7 @@ layers.MaxPooling2D(2, 2),
 layers.Dropout(0.2),
 
 layers.Dense(1, activation='sigmoid')
-model.fit(imagex, imagey, batch_size=30, epochs=100)
+model.fit(image_size, batch_size=30, epochs=100)
 
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 model.summary()
