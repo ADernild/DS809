@@ -2,6 +2,9 @@ import sys
 import model_2
 import matplotlib as plt
 
+#History is changed to hist based on the .py file model_2
+#If model_2 is used as is, this .py file should have the proper imports from model_2
+
 loss_train = hist.hist['train_loss']
 loss_val = hist.hist['val_loss']
 epochs = range(1,35)
@@ -50,3 +53,5 @@ def learning_summary(hist):
     filename = sys.argv[0].split('/')[-1]
     plt.savefig(filename + 'plt.png')
     plt.close()
+
+    #If colorblindness is an issue, the colors chosen for the graphs needs change.
