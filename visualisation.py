@@ -1,9 +1,9 @@
 import sys
-
+import model_2
 import matplotlib as plt
 
-loss_train = history.history['train_loss']
-loss_val = history.history['val_loss']
+loss_train = hist.hist['train_loss']
+loss_val = hist.hist['val_loss']
 epochs = range(1,35)
 
 plt.plot(epochs, loss_train, 'g', label='Training loss')
@@ -14,8 +14,8 @@ plt.ylabel('Loss')
 plt.legend()
 plt.show() #or is it plt.print() ???
 
-loss_train = history.history['accuracy']
-loss_val = history.history['val_accuracy']
+loss_train = hist.hist['accuracy']
+loss_val = hist.hist['val_accuracy']
 epochs = range(1,11)
 
 plt.plot(epochs, loss_train, 'g', label='Training accuracy')
@@ -35,17 +35,17 @@ from sklearn.linear_model import Ridge
 import model
 from matplotlib import pyplot as plt
 
-def learning_summary(history):
+def learning_summary(hist):
     #Plotting loss
     plt.subplot(210)
     plt.title('Cross entropy loss')
-    plt.plot(history.history['loss'], color = 'red', label = 'training')
-    plt.plot(history.history['validation_loss'], color = 'blue', label = 'test')
+    plt.plot(hist.hist['loss'], color = 'red', label = 'training')
+    plt.plot(hist.hist['validation_loss'], color = 'blue', label = 'test')
     #Plotting the accuracy
     plt.subplot(211)
     plt.title('Accuracy of classification')
-    plt.plot(history.history['accuracy'], color = 'orange', label = 'training')
-    plt.plot(history.history['validation_accuracy'], color = 'green', label = 'test')
+    plt.plot(hist.hist['accuracy'], color = 'orange', label = 'training')
+    plt.plot(hist.hist['validation_accuracy'], color = 'green', label = 'test')
     #Plot saved to file
     filename = sys.argv[0].split('/')[-1]
     plt.savefig(filename + 'plt.png')
