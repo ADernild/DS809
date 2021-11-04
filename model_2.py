@@ -5,6 +5,8 @@
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
+import numpy as np
 
 #%% ImageDataGenerator
 
@@ -15,7 +17,7 @@ train_datagen = ImageDataGenerator(rotation_range=40,
                                    rescale=1./255,
                                    shear_range=0.1,
                                    zoom_range=0.2,
-                                   horizontal_flip= False,
+                                   horizontal_flip= True,
                                    vertical_flip=True,
                                    width_shift_range=0.1,
                                    height_shift_range=0.1)
@@ -39,6 +41,33 @@ test_gen = test_datagen.flow_from_directory(
     target_size=image_size,
     batch_size=batch,
     class_mode='binary')
+
+#%% Visualizing ImageDataGenerator augmentation
+train_datagen_viz = ImageDataGenerator(rotation_range=40,
+                                   shear_range=0.1,
+                                   zoom_range=0.2,
+                                   horizontal_flip= True,
+                                   vertical_flip=True,
+                                   width_shift_range=0.1,
+                                   height_shift_range=0.1)
+
+train_gen_viz = train_datagen_viz.flow_from_directory(
+    'train',
+    target_size=image_size,
+    color_mode='rgb',
+    batch_size=1,
+    class_mode='binary',
+    seed=1337)
+
+fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(15,15))
+
+for i in range(4):
+    image = next(train_gen_viz)[0].astype('uint8')
+    
+    image = np.squeeze(image)
+    
+    ax[i].imshow(image)
+    ax[i].axis('off')
 
 #%% Model Initialization
 
