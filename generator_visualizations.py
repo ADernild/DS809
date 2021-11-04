@@ -28,6 +28,8 @@ train_datagen_6 = ImageDataGenerator(width_shift_range=0.1)
 
 train_datagen_7 = ImageDataGenerator(height_shift_range=0.1)
 
+train_datagen_8 = ImageDataGenerator(brightness_range=(0.3,1.5))
+
 train_gen_1 = train_datagen_1.flow_from_directory(
     'train',
     target_size=image_size,
@@ -83,6 +85,15 @@ train_gen_7 = train_datagen_7.flow_from_directory(
     batch_size=1,
     class_mode='binary',
     seed=1337)
+
+train_gen_8 = train_datagen_8.flow_from_directory(
+    'train',
+    target_size=image_size,
+    color_mode='rgb',
+    batch_size=1,
+    class_mode='binary',
+    seed=1337)
+
 
 generators = [train_gen_1, train_gen_2, train_gen_3, train_gen_4, train_gen_5, train_gen_6, train_gen_7]
 
@@ -164,3 +175,14 @@ for i in range(4):
      ax[i].axis('off')
 
 fig.savefig('plots/height_shift_range.png')
+
+fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(15,15))
+for i in range(4):
+     image = next(train_gen_8)[0].astype('uint8')
+
+     image = np.squeeze(image)
+
+     ax[i].imshow(image)
+     ax[i].axis('off')
+
+fig.savefig('plots/brightness_shift_range.png')
