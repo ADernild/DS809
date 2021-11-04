@@ -1,31 +1,14 @@
 import keras
-import numpy as np
-import tensorflow as tf
-import sklearn
 import os
-import glob
-import matplotlib
-import numpy
-from numpy import shape
-from matplotlib import image
-from matplotlib import pyplot
 from sklearn.model_selection import train_test_split
-from keras_preprocessing.image import load_img
-from keras_preprocessing.image import img_to_array
 from keras_preprocessing.image import ImageDataGenerator
 from numpy import asarray
-import datetime
 from keras import layers, losses
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from tqdm import tqdm
-from glob import glob
-from shutil import copy, move
 from PIL import Image
 import glob
 import pandas as pd
-from keras.models import sequential
+from keras.models import Sequential
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 #Issue; Unsure if every image in /train/cat and /train/dog is "imported", or if it's just pointing on /train and the two folders(?)
@@ -50,7 +33,7 @@ earlystop = EarlyStopping(patience=10)
 learning_rate_red = ReduceLROnPlateau(monitor='val_acc', patience=5, verbose=1, factor=0.5, min_lr=0.00001)
 callbacks = [earlystop, learning_rate_red]
 
-#Df from earlier
+#Df from earlier / NEEDS TO BE FIXED / TO DO
 df["category"] = df["category"].replace({0:'cat',1:'dog'})
 training_df, validate_df=train_test_split(df, test_size=0.20, random_state=42)
 training_df = training_df.reset_index(drop=True) #Unsure if needed - reset on index + drop
@@ -88,6 +71,9 @@ model.fit(image_size, batch_size=30, epochs=100)
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 model.summary()
 
+history = model.fit_generator(train_gen, steps_per_epoch=len(train_gen)),
+
+# Needed: History on model ex. history = model.fit(x,y, epochs= ,batch_size= , val= etc)
 
 # Needed: Plots/ visuals to show the training i.e. to be implemented
 
