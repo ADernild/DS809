@@ -14,6 +14,7 @@ import os
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
+
 #%% ImageDataGenerator
 
 image_size = [200, 200]
@@ -79,7 +80,7 @@ for i in range(4):
 
 model = keras.Sequential([
     # First convolution
-    layers.Conv2D(16, (3,3), activation='relu', input_shape=(200, 200, 3)),
+    layers.Conv2D(16, (3,3), activation='relu', input_shape=(image_size + [3])),
     layers.MaxPooling2D(2,2), # halving the image size 
     
     # Second convolution
@@ -103,6 +104,7 @@ model = keras.Sequential([
     
     # 512 neuron hidden layer
     layers.Dense(512, activation='relu'),
+    layers.Dropout(.2),
     
     # Binary output layer
     layers.Dense(1, activation='sigmoid')
@@ -110,9 +112,11 @@ model = keras.Sequential([
 
 model.summary() # model summary
 
+opt = keras.optimizers.Adam(lr=0.0001) #trying a smaller learning rate
+
 model.compile(
     loss='binary_crossentropy',
-    optimizer='adam',
+    optimizer=opt,
     metrics=['accuracy']) # compiling model
 
 #%% Training model
@@ -138,4 +142,4 @@ hist = model.fit(
 model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.7305
 
 #%% Saving Model
-model.save('aid/first_model.h5')
+model.save('aid/second_model.h5')
