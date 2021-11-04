@@ -7,7 +7,13 @@ from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
+
+# Set path to this file location
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 #%% ImageDataGenerator
 
 image_size = [200, 200]
