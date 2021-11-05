@@ -5,8 +5,6 @@
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 
 
@@ -20,61 +18,57 @@ os.chdir(dname)
 image_size = [200, 200]
 batch = 32
 
-train_datagen = ImageDataGenerator(rotation_range=40,
-                                   rescale=1./255,
-                                   shear_range=0.1,
-                                   zoom_range=0.2,
-                                   horizontal_flip= True,
-                                   vertical_flip=True,
-                                   width_shift_range=0.1,
-                                   height_shift_range=0.1)
+# train_datagen = ImageDataGenerator(rotation_range=40,
+#                                    rescale=1./255,
+#                                    shear_range=0.1,
+#                                    zoom_range=0.2,
+#                                    horizontal_flip= True,
+#                                    vertical_flip=True,
+#                                    width_shift_range=0.1,
+#                                    height_shift_range=0.1,
+#                                    brightness_range=(0.3, 1.5))
+
+# train_datagen = ImageDataGenerator(rescale=1./255,
+#                                     horizontal_flip=True) # Best one setting, however, might overfit at high epochs > 25
+
+train_datagen = ImageDataGenerator(rescale=1./255,
+                                    rotation_range=30,
+                                    width_shift_range=0.1,
+                                    height_shift_range=0.1,
+                                    zoom_range=0.2,
+                                    horizontal_flip=True,
+                                    brightness_range=[0.5, 1.3]) # Best combination of settings, so far.
+
+
+test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_gen = train_datagen.flow_from_directory(
     'train',
     target_size=image_size,
     batch_size=batch,
-    class_mode='binary')
-
-test_datagen = ImageDataGenerator(rescale=1./255)
+    class_mode='binary',
+    seed=1338)
 
 val_gen = test_datagen.flow_from_directory(
         'val',
         target_size=image_size,
         batch_size=batch,
-        class_mode='binary')
+        class_mode='binary',
+        seed=1338)
 
 test_gen = test_datagen.flow_from_directory(
     'test',
     target_size=image_size,
     batch_size=batch,
-    class_mode='binary')
-
-#%% Visualizing ImageDataGenerator augmentation
-train_datagen_viz = ImageDataGenerator(rotation_range=40,
-                                   shear_range=0.1,
-                                   zoom_range=0.2,
-                                   horizontal_flip= True,
-                                   vertical_flip=True,
-                                   width_shift_range=0.1,
-                                   height_shift_range=0.1)
-
-train_gen_viz = train_datagen_viz.flow_from_directory(
-    'train',
-    target_size=image_size,
-    color_mode='rgb',
-    batch_size=1,
     class_mode='binary',
-    seed=1337)
+    seed=1338)
 
-fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(15,15))
-
-for i in range(4):
-    image = next(train_gen_viz)[0].astype('uint8')
-    
-    image = np.squeeze(image)
-    
-    ax[i].imshow(image)
-    ax[i].axis('off')
+full_gen = train_datagen.flow_from_directory(
+    'full_dataset',
+    target_size=image_size,
+    batch_size=batch,
+    class_mode='binary',
+    seed=1338)
 
 #%% Model Initialization
 
@@ -103,8 +97,8 @@ model = keras.Sequential([
     layers.Flatten(),
     
     # 512 neuron hidden layer
-    layers.Dense(512, activation='relu'),
-    layers.Dropout(.2),
+    layers.Dense(512, activation='relu', kernel_regularizer=keras.regularizers.l2(0.0005)),
+    layers.Dropout(.5),
     
     # Binary output layer
     layers.Dense(1, activation='sigmoid')
@@ -112,7 +106,7 @@ model = keras.Sequential([
 
 model.summary() # model summary
 
-opt = keras.optimizers.Adam(lr=0.0001) #trying a smaller learning rate
+opt = keras.optimizers.Adam(learning_rate=0.0001) #trying a smaller learning rate
 
 model.compile(
     loss='binary_crossentropy',
@@ -129,17 +123,42 @@ STEP_SIZE_TRAIN=train_gen.n//train_gen.batch_size
 STEP_SIZE_VAL=val_gen.n//val_gen.batch_size
 STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
 
+epochs = 40
+
 # Fitting model
 hist = model.fit(
     train_gen,
     steps_per_epoch=STEP_SIZE_TRAIN,
-    epochs=30,
+    epochs=epochs,
     validation_data=val_gen,
     validation_steps=STEP_SIZE_VAL,
     callbacks=[tensorboard_callback])
 
+#%% Number of images generated with current model setup
+print(f'Number of images generated: {epochs*batch*STEP_SIZE_TRAIN}')
+
 #%% Model evaluation
-model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.7305
+model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8086
+
+#%% Training on train and val together
+
+# Step sizes for train, validation and testing
+STEP_SIZE_FULL=full_gen.n//full_gen.batch_size
+STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
+
+epochs = 40
+
+# Fitting model
+hist = model.fit(
+    full_gen,
+    steps_per_epoch=STEP_SIZE_FULL,
+    epochs=epochs)
+
+#%% Number of images generated with current model setup
+print(f'Number of images generated: {epochs*batch*STEP_SIZE_FULL}')
+
+#%% Model evaluation
+model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
 
 #%% Saving Model
-model.save('aid/second_model.h5')
+model.save('aid/final_model.h5')
