@@ -158,7 +158,7 @@ hist = model.fit(
 print(f'Number of images generated: {epochs*batch*STEP_SIZE_FULL}')
 
 #%% Model evaluation
-model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.7812
+model.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
 
 #%% Saving Model
 model.save('aid/final_model.h5')
