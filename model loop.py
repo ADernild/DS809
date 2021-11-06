@@ -115,7 +115,7 @@ optimizers = ["adam", "sgd"]
 epoch_n = 10
 
 # Number of models to be created:
-model_count = len(con_layer_1) * len(con_layer_2) * len(con_layer_3) * len(act_funcs) * len(act_funcs) * len(act_funcs) * len(dropout_sizes) * len(optimizers) * len(hidden_layer_1)
+model_count = len(con_layer_1) * len(con_layer_2) * len(con_layer_3) * len(act_funcs) * len(act_funcs) * len(act_funcs) * len(act_funcs) * len(dropout_sizes) * len(optimizers) * len(hidden_layer_1)
 
 # Result array
 results = pd.DataFrame(columns = ['loss',
