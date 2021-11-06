@@ -20,10 +20,8 @@ import tensorflow as tf
 #from tensorflow.python.client import device_lib
 
 # Set path to this file location
-#path = "C:/Users/Max/Documents/code/SDU_kode/DS809 Deep learning project"
-#abspath = os.path.abspath(__file__)
-#dname = os.path.dirname(abspath)
-#os.chdir(dname)
+path = "C:/Users/Max/Documents/code/SDU_kode/DS809 Deep learning project"
+os.chdir(path)
 #os.path.dirname(os.path.abspath("__file__"))
 os.getcwd()
 #os.chdir('DS809 Deep learning project')
