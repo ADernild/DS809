@@ -76,8 +76,8 @@ con_layer_5 = [64, 128]
 act_funcs_con = ['relu']
 act_funcs_con_last = ['selu', 'elu']
 act_funcs_hidden = ['sigmoid', 'relu']
-hidden_layer_1 = [512, 1024]
-dropout_sizes = [0.2, 0.5]
+hidden_layer_1 = [512]
+dropout_sizes = [0.5]
 optimizers = ["adam"]
 epoch_n = 25
 
