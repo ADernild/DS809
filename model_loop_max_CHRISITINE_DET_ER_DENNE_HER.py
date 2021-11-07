@@ -6,7 +6,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 #import numpy as np
 #from sklearn.preprocessing import StandardScaler
 from numpy.random import seed # to set seed
-from tensorflow.random import set_seed # to set seed
+#from tensorflow.random import set_seed # to set seed
+from random import seed as set_seed
 import pandas as pd
 import os
 #import tensorflow as tf
@@ -70,15 +71,15 @@ full_gen = train_datagen.flow_from_directory(
 con_layer_1 = [16]
 con_layer_2 = [32]
 con_layer_3 = [32, 64]
-con_layer_4 = [32, 64, 128]
-con_layer_5 = [32, 64, 128]
+con_layer_4 = [64, 128]
+con_layer_5 = [64, 128]
 act_funcs_con = ['relu']
 act_funcs_con_last = ['selu', 'elu', 'tanh']
 act_funcs_hidden = ['sigmoid', 'relu']
 hidden_layer_1 = [512, 1024]
 dropout_sizes = [0.2, 0.5]
 optimizers = ["adam"]
-epoch_n = 30
+epoch_n = 25
 
 # Number of models to be created:
 model_count = len(con_layer_1) * len(con_layer_2) * len(con_layer_3) * len(con_layer_4) * len(con_layer_5) * len(act_funcs_con) * len(act_funcs_con) * len(act_funcs_con_last) * len(dropout_sizes) * len(optimizers) * len(hidden_layer_1) * len(act_funcs_hidden)
