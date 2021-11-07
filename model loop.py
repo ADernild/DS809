@@ -20,10 +20,10 @@ import tensorflow as tf
 #from tensorflow.python.client import device_lib
 
 # Set path to this file location
-path = "C:/Users/Max/Documents/code/SDU_kode/DS809 Deep learning project"
+path = "C:/Users/Max/Documents/python/ds809-project"
 os.chdir(path)
 #os.path.dirname(os.path.abspath("__file__"))
-os.getcwd()
+print(os.getcwd())
 #os.chdir('DS809 Deep learning project')
 #%%
 # Apply seed
@@ -35,7 +35,7 @@ os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 
 tf.test.is_built_with_cuda()
 
-tf.config.list_physical_devices('GPU')
+print(tf.config.list_physical_devices('GPU'))
 
 #%%
 
@@ -109,7 +109,7 @@ con_layer_3 = [32]
 act_funcs = ['relu', 'selu', 'elu', 'tanh', 'sigmoid']
 hidden_layer_1 = [512]
 dropout_sizes = [0.2]
-optimizers = ["adam", "sgd"]
+optimizers = ["adam"]
 epoch_n = 10
 
 # Number of models to be created:
@@ -258,6 +258,7 @@ for con1 in con_layer_1:
                                                    'epoch': (h+1),
                                                    'epoch_n': epoch_n}
                                             results = results.append(row, ignore_index=True)
+                                        results.to_csv('loop_results.csv',index=False)
 
 print("All done")
 
