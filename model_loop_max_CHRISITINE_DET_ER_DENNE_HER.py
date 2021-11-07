@@ -94,6 +94,10 @@ results = pd.DataFrame(columns = ['loss',
                                   'con_layer_2_activation',
                                   'con_layer_3',
                                   'con_layer_3_activation',
+                                  'con_layer_4',
+                                  'con_layer_4_activation',
+                                  'con_layer_5',
+                                  'con_layer_5_activation',
                                   'hidden_layer_1',
                                   'hidden_layer_1_activation',
                                   'dropout_sizes',
@@ -101,9 +105,6 @@ results = pd.DataFrame(columns = ['loss',
                                   'epoch',
                                   'epoch_n'])
 print(f"There are {model_count} parameter combinations and {epoch_n} epochs")
-
-# Load
-#results = pd.read_csv('loop_results_new.csv')
 
 # Loop tracking
 count = 0 # To count loops
@@ -149,6 +150,10 @@ for con1 in con_layer_1:
                                                                            (results['con_layer_2_activation'] == con2_act) &
                                                                            (results['con_layer_3'] == con3) &
                                                                            (results['con_layer_3_activation'] == con3_act) &
+                                                                           (results['con_layer_4'] == con4) &
+                                                                           (results['con_layer_4_activation'] == con4_act) &
+                                                                           (results['con_layer_5'] == con5) &
+                                                                           (results['con_layer_5_activation'] == con5_act) &
                                                                            (results['hidden_layer_1'] == hidden1) &
                                                                            (results['hidden_layer_1_activation'] == hidden1_act) &
                                                                            (results['dropout_sizes'] == dropout_size) &
@@ -234,6 +239,10 @@ for con1 in con_layer_1:
                                                                    'con_layer_2_activation': con2_act,
                                                                    'con_layer_3': con3,
                                                                    'con_layer_3_activation': con3_act,
+                                                                   'con_layer_4': con4,
+                                                                   'con_layer_4_activation': con4_act,
+                                                                   'con_layer_5': con5,
+                                                                   'con_layer_5_activation': con5_act,
                                                                    'hidden_layer_1': hidden1,
                                                                    'hidden_layer_1_activation': hidden1_act,
                                                                    'dropout_sizes': dropout_size,
@@ -242,6 +251,6 @@ for con1 in con_layer_1:
                                                                    'epoch_n': epoch_n}
                                                             results = results.append(row, ignore_index=True)
                                                         # Save model
-                                                        results.to_csv('loop_results_new.csv',index=False)
+                                                        results.to_csv('loop_results.csv',index=False)
 
 print("All done")
