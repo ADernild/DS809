@@ -2,15 +2,15 @@
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+#import matplotlib.pyplot as plt
+#import numpy as np
+#from sklearn.preprocessing import StandardScaler
 from numpy.random import seed # to set seed
 from tensorflow.random import set_seed # to set seed
 import pandas as pd
 import os
-import tensorflow as tf
-from tensorflow.python.client import device_lib
+#import tensorflow as tf
+#from tensorflow.python.client import device_lib
 
 # Set path to this file location
 abspath = os.path.abspath(__file__)
