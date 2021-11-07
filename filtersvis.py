@@ -39,11 +39,11 @@ for i in range(n_filters):
         ax.set_xticks([])
         ax.set_yticks([])
         # plot filter channel in grayscale
-        pyplot.imshow(f[:, :, j], cmap='gray')
+        pyplot.imshow(f[:, :, j], cmap='brg')
         ix += 1
 	# show the figure
 filename = sys.argv[0].split('/')[-1]
-plt.savefig(filename + 'filter_plt.png')
+plt.savefig(filename + 'filter_plt_brg.png')
 plt.close()
 pyplot.show()
 
@@ -79,11 +79,11 @@ for _ in range(square):
         ax.set_xticks([])
         ax.set_yticks([])
         # plot filter channel in grayscale
-        plt.imshow(featuremaps[0, :, :, ix-1], cmap='gray')
+        plt.imshow(featuremaps[0, :, :, ix-1], cmap='brg')
         ix += 1
 	# show the figure
 filename = sys.argv[0].split('/')[-1]
-plt.savefig(filename + 'map_plt.png')
+plt.savefig(filename + 'map_plt_brg.png')
 plt.close()
 plt.show()
 
