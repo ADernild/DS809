@@ -120,6 +120,7 @@ import datetime
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="./logs", histogram_freq=1)  # tensorboard --logdir ./logs
 log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
+
 # Step sizes for train, validation and testing
 STEP_SIZE_TRAIN = train_gen.n // train_gen.batch_size
 STEP_SIZE_VAL = val_gen.n // val_gen.batch_size
