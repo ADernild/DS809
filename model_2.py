@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 # %% Libraries
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 import datetime
+
 
 # Set path to this file location
 abspath = os.path.abspath(__file__)
@@ -113,16 +115,17 @@ model.compile(
     metrics=['accuracy'])  # compiling model
 
 # %% Training model
-
+import datetime
 # Callbacks for tensorboard 
-tensorboard_callback = keras.callbacks.TensorBoard(log_dir="./logs")  # tensorboard --logdir ./logs
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="./logs", histogram_freq=1)  # tensorboard --logdir ./logs
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # Step sizes for train, validation and testing
 STEP_SIZE_TRAIN = train_gen.n // train_gen.batch_size
 STEP_SIZE_VAL = val_gen.n // val_gen.batch_size
 STEP_SIZE_TEST = test_gen.n // test_gen.batch_size
 
-epochs = 10
+epochs = 250
 
 # Fitting model
 hist = model.fit(
@@ -145,7 +148,7 @@ model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8086
 STEP_SIZE_FULL = full_gen.n // full_gen.batch_size
 STEP_SIZE_TEST = test_gen.n // test_gen.batch_size
 
-epochs = 10
+epochs = 250
 
 # Fitting model
 hist = model.fit(
@@ -160,7 +163,7 @@ print(f'Number of images generated: {epochs * batch * STEP_SIZE_FULL}')
 model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8398
 
 # %% Saving Model
-model.save('aid/final_model_sun.h5')
+model.save('aid/final_model_man.h5')
 
 
 
