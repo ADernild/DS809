@@ -20,10 +20,10 @@ import tensorflow as tf
 #from tensorflow.python.client import device_lib
 
 # Set path to this file location
-path = "C:/Users/Max/Documents/code/SDU_kode/DS809 Deep learning project"
+path = "C:/Users/Max/Documents/python/ds809-project"
 os.chdir(path)
 #os.path.dirname(os.path.abspath("__file__"))
-os.getcwd()
+print(os.getcwd())
 #os.chdir('DS809 Deep learning project')
 #%%
 # Apply seed
@@ -35,7 +35,7 @@ os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 
 tf.test.is_built_with_cuda()
 
-tf.config.list_physical_devices('GPU')
+print(tf.config.list_physical_devices('GPU'))
 
 #%%
 
@@ -109,8 +109,8 @@ con_layer_3 = [32]
 act_funcs = ['relu', 'selu', 'elu', 'tanh', 'sigmoid']
 hidden_layer_1 = [512]
 dropout_sizes = [0.2]
-optimizers = ["adam", "sgd"]
-epoch_n = 10
+optimizers = ["adam"]
+epoch_n = 30
 
 # Number of models to be created:
 model_count = len(con_layer_1) * len(con_layer_2) * len(con_layer_3) * len(act_funcs) * len(act_funcs) * len(act_funcs) * len(act_funcs) * len(dropout_sizes) * len(optimizers) * len(hidden_layer_1)
@@ -142,122 +142,120 @@ results = pd.read_csv('loop_results.csv')
 count = 0 # To count loops
 # Model loop
 for con1 in con_layer_1:
-    for con1_act in act_funcs:
-        for con2 in con_layer_2:
-            if(con1*3<con2):
+    for con2 in con_layer_2:
+        if(con1*3<con2):
+            continue
+        for con3 in con_layer_3:
+            if(con2*3<con3):
                 continue
-            for con2_act in act_funcs:
-                for con3 in con_layer_3:
-                    if(con2*3<con3):
-                        continue
-                    for con3_act in act_funcs:
-                        for hidden1 in hidden_layer_1:
-                            for hidden1_act in act_funcs:
-                                for dropout_size in dropout_sizes:
-                                    for optimizer in optimizers:
-                                        # Count and print progress
-                                        count = count+1
-                                        
-                                        
-                                        # Check if combination has been used
-                                        if(len(results.loc[(results['con_layer_1'] == con1) &
-                                                           (results['con_layer_1_activation'] <= con1_act) &
-                                                           (results['con_layer_2'] == con2) &
-                                                           (results['con_layer_2_activation'] == con2_act) &
-                                                           (results['con_layer_3'] == con3) &
-                                                           (results['con_layer_3_activation'] == con3_act) &
-                                                           (results['hidden_layer_1'] == hidden1) &
-                                                           (results['hidden_layer_1_activation'] == hidden1_act) &
-                                                           (results['dropout_sizes'] == dropout_size) &
-                                                           (results['optimizers'] == optimizer) &
-                                                           (results['epoch_n'] <= epoch_n)])):
-                                            print(f"Skipped model {count} out of {model_count}.")
-                                            continue
-                                        else:
-                                            print(f'Training model {count} out of {model_count}.')
-                                        # Model baseret på model.py kopieret 04/11 ~11.30
-                                        model = keras.Sequential([
-                                            # First convolution
-                                            layers.Conv2D(con1, (3,3), activation=con1_act, input_shape=(200, 200, 3)),
-                                            layers.MaxPooling2D(2,2), # halving the image size 
+            for con3_act in act_funcs:
+                for hidden1 in hidden_layer_1:
+                    for dropout_size in dropout_sizes:
+                        for optimizer in optimizers:
+                            # Count and print progress
+                            count = count+1
+                            
+                            
+                            # Check if combination has been used
+                            if(len(results.loc[(results['con_layer_1'] == con1) &
+                                               (results['con_layer_1_activation'] <= 'relu') &
+                                               (results['con_layer_2'] == con2) &
+                                               (results['con_layer_2_activation'] == 'relu') &
+                                               (results['con_layer_3'] == con3) &
+                                               (results['con_layer_3_activation'] == con3_act) &
+                                               (results['hidden_layer_1'] == hidden1) &
+                                               (results['hidden_layer_1_activation'] == 'sigmoid') &
+                                               (results['dropout_sizes'] == dropout_size) &
+                                               (results['optimizers'] == optimizer) &
+                                               (results['epoch_n'] <= epoch_n)])):
+                                print(f"Skipped model {count} out of {model_count}.")
+                                continue
+                            else:
+                                print(f'Training model {count} out of {model_count}.')
+                            # Model baseret på model.py kopieret 04/11 ~11.30
+                            model = keras.Sequential([
+                                # First convolution
+                                layers.Conv2D(con1, (3,3), activation='relu', input_shape=(200, 200, 3)),
+                                layers.MaxPooling2D(2,2), # halving the image size 
 
-                                            # Second convolution
-                                            layers.Conv2D(con2, (3,3), activation=con2_act),
-                                            layers.MaxPooling2D(2,2),
+                                # Second convolution
+                                layers.Conv2D(con2, (3,3), activation='relu'),
+                                layers.MaxPooling2D(2,2),
 
-                                            # Third convolution
-                                            layers.Conv2D(con3, (3,3), activation=con3_act),
-                                            layers.MaxPooling2D(2,2),
+                                # Third convolution
+                                layers.Conv2D(con3, (3,3), activation=con3_act),
+                                layers.MaxPooling2D(2,2),
 
-                                            # Fourth convolution - hidden until after some finetuning
-                                            #layers.Conv2D(64, (3,3), activation='relu'),
-                                            #layers.MaxPooling2D(2,2),
+                                # Fourth convolution - hidden until after some finetuning
+                                #layers.Conv2D(64, (3,3), activation='relu'),
+                                #layers.MaxPooling2D(2,2),
 
-                                            # Fifth convolution - hidden until after some finetuning
-                                            #layers.Conv2D(64, (3,3), activation='relu'),
-                                            #layers.MaxPooling2D(2,2),
+                                # Fifth convolution - hidden until after some finetuning
+                                #layers.Conv2D(64, (3,3), activation='relu'),
+                                #layers.MaxPooling2D(2,2),
 
-                                            # Flatten results to feed into a Deep Nerual Net
-                                            layers.Flatten(),
+                                # Flatten results to feed into a Deep Nerual Net
+                                layers.Flatten(),
 
-                                            # 512 neuron hidden layer
-                                            layers.Dense(hidden1, activation=hidden1_act),
-                                            
-                                            # Dropout NEW!!!!!!
-                                            layers.Dropout(dropout_size),
+                                # 512 neuron hidden layer
+                                layers.Dense(hidden1, activation='sigmoid'),
+                                
+                                # Dropout NEW!!!!!!
+                                layers.Dropout(dropout_size),
 
-                                            # Binary output layer
-                                            layers.Dense(1, activation='sigmoid')
-                                            ])
+                                # Binary output layer
+                                layers.Dense(1, activation='sigmoid')
+                                ])
 
-                                        #model.summary() # model summary
+                            #model.summary() # model summary
 
-                                        model.compile(
-                                            loss='binary_crossentropy',
-                                            optimizer=optimizer,
-                                            metrics=['accuracy']) # compiling model
-                                        
-                                        # Model fitting fra model_2.py kopieret 4/11 ~11.30
-                                        # Callbacks for tensorboard 
-                                        tensorboard_callback = keras.callbacks.TensorBoard(log_dir="./logs") # tensorboard --logdir ./logs
+                            model.compile(
+                                loss='binary_crossentropy',
+                                optimizer=optimizer,
+                                metrics=['accuracy']) # compiling model
+                            
+                            # Model fitting fra model_2.py kopieret 4/11 ~11.30
+                            # Callbacks for tensorboard 
+                            tensorboard_callback = keras.callbacks.TensorBoard(log_dir="./logs") # tensorboard --logdir ./logs
 
-                                        # Step sizes for train, validation and testing
-                                        STEP_SIZE_TRAIN=train_gen.n//train_gen.batch_size
-                                        STEP_SIZE_VAL=val_gen.n//val_gen.batch_size
-                                        STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
+                            # Step sizes for train, validation and testing
+                            STEP_SIZE_TRAIN=train_gen.n//train_gen.batch_size
+                            STEP_SIZE_VAL=val_gen.n//val_gen.batch_size
+                            STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
 
-                                        # Fitting model
-                                        history = model.fit(
-                                            train_gen,
-                                            steps_per_epoch=STEP_SIZE_TRAIN,
-                                            epochs=epoch_n, # for at spare lidt tid
-                                            validation_data=val_gen,
-                                            validation_steps=STEP_SIZE_VAL,
-                                            callbacks=[tensorboard_callback],
-                                            verbose = False)
-                                        
-                                        # Get results (from history)
-                                        history = history.history
-                                        
-                                        # Append each epoch
-                                        for h in range(len(history['loss'])):
-                                            row = {'loss':history['loss'][h],
-                                                   'val_loss':history['val_loss'][h],
-                                                   'accuracy':history['accuracy'][h],
-                                                   'val_accuracy': history['val_accuracy'][h],
-                                                   'con_layer_1': con1,
-                                                   'con_layer_1_activation': con1_act,
-                                                   'con_layer_2': con2,
-                                                   'con_layer_2_activation': con2_act,
-                                                   'con_layer_3': con3,
-                                                   'con_layer_3_activation': con3_act,
-                                                   'hidden_layer_1': hidden1,
-                                                   'hidden_layer_1_activation': hidden1_act,
-                                                   'dropout_sizes': dropout_size,
-                                                   'optimizers': optimizer,
-                                                   'epoch': (h+1),
-                                                   'epoch_n': epoch_n}
-                                            results = results.append(row, ignore_index=True)
+                            # Fitting model
+                            history = model.fit(
+                                train_gen,
+                                steps_per_epoch=STEP_SIZE_TRAIN,
+                                epochs=epoch_n, # for at spare lidt tid
+                                validation_data=val_gen,
+                                validation_steps=STEP_SIZE_VAL,
+                                callbacks=[tensorboard_callback],
+                                verbose = False)
+                            
+                            # Get results (from history)
+                            history = history.history
+                            
+                            # Append each epoch
+                            for h in range(len(history['loss'])):
+                                row = {'loss':history['loss'][h],
+                                       'val_loss':history['val_loss'][h],
+                                       'accuracy':history['accuracy'][h],
+                                       'val_accuracy': history['val_accuracy'][h],
+                                       'con_layer_1': con1,
+                                       'con_layer_1_activation': 'relu',
+                                       'con_layer_2': con2,
+                                       'con_layer_2_activation': 'relu',
+                                       'con_layer_3': con3,
+                                       'con_layer_3_activation': con3_act,
+                                       'hidden_layer_1': hidden1,
+                                       'hidden_layer_1_activation': 'sigmoid',
+                                       'dropout_sizes': dropout_size,
+                                       'optimizers': optimizer,
+                                       'epoch': (h+1),
+                                       'epoch_n': epoch_n}
+                                results = results.append(row, ignore_index=True)
+                            results.to_csv('loop_results.csv',index=False)
 
 print("All done")
 

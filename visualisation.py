@@ -1,4 +1,4 @@
-import sys
+"""import sys
 import model_2
 import matplotlib as plt
 
@@ -7,9 +7,9 @@ import matplotlib as plt
 
 loss_train = hist.hist['train_loss']
 loss_val = hist.hist['val_loss']
-epochs = range(1,35)
+epochs = range(1,35)"""
 
-plt.plot(epochs, loss_train, 'g', label='Training loss')
+"""plt.plot(epochs, loss_train, 'g', label='Training loss')
 plt.plot(epochs, loss_val, 'b', label='Validation loss')
 plt.title('Training and Validation loss')
 plt.xlabel('Epochs')
@@ -54,4 +54,4 @@ def learning_summary(hist):
     plt.savefig(filename + 'plt.png')
     plt.close()
 
-    #If colorblindness is an issue, the colors chosen for the graphs needs change.
+    #If colorblindness is an issue, the colors chosen for the graphs needs change."""
