@@ -9,6 +9,13 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 import datetime
 
+#impots for tensorboard, windows
+import matplotlib.pyplot as plt
+import pandas as pd
+import datetime as dt
+import urllib.request, json
+import os
+import numpy as np
 
 # Set path to this file location
 abspath = os.path.abspath(__file__)
