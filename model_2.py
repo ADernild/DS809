@@ -172,12 +172,3 @@ model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8398
 
 # %% Saving Model
 model.save('aid/final_model_man.h5')
-
-
-
-<<<<<<< HEAD
-#%% Saving Model
-model.save('aid/final_model.h5')
-=======
-    # If colorblindness is an issue, the colors chosen for the graphs needs change.
->>>>>>> 23dccee8a336872e61d2c4dc1020745b878ed3a8
