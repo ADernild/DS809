@@ -32,3 +32,17 @@ STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
 model_1.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
 
 model_2.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8125
+
+
+#%%
+import numpy as np
+from keras.preprocessing import image
+
+test_path = 'bonus/dog/dog.1773.jpg' # einstein
+
+img_width, img_height = 200, 200
+img = image.load_img(test_path, target_size = (img_width, img_height))
+img = image.img_to_array(img)
+img = np.expand_dims(img, axis = 0)
+
+testing = model_1.predict(img)
