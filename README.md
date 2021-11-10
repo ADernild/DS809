@@ -1,5 +1,6 @@
 # DS809
 ## MSc in Data Science at SDU, Odense, Denmark
+
 -------------------------------------------------------------------------------------
 
 This repository is made as a part of the DS809 classification project with cats and dogs. 
