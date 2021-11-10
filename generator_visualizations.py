@@ -194,16 +194,17 @@ gen_dict = {'rotation': rotation_range,
             'full gen': full_gen}
 
 #%%
-plt.figure(figsize=(8,32))
+plt.figure(figsize=(8,15))
 
 i = 1
 for name, gen in gen_dict.items():
-    for _ in range(1,4):
-        plt.subplot(7, 3, i)
+    for _ in range(1,5):
+        plt.subplot(7, 4, i)
         batch = gen.next()
         image_ = batch[0].astype('uint8')
         plt.imshow(image_)
         plt.axis('off')
         plt.title(name)
         i = i+1
-plt.show()
+
+plt.savefig('plots/imgdatagen.png')
