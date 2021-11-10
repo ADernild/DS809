@@ -17,6 +17,8 @@ import urllib.request, json
 import os
 import numpy as np
 
+keras.backend.clear_session()
+
 # Set path to this file location
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
@@ -150,6 +152,7 @@ print(f'Number of images generated: {epochs * batch * STEP_SIZE_TRAIN}')
 # %% Model evaluation
 model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8086
 
+"""
 # %% Training on train and val together
 
 # Step sizes for train, validation and testing
@@ -168,7 +171,7 @@ hist = model.fit(
 print(f'Number of images generated: {epochs * batch * STEP_SIZE_FULL}')
 
 # %% Model evaluation
-model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8398
+model.evaluate(test_gen, steps=STEP_SIZE_TEST)  # accuracy 0.8398 """
 
 # %% Saving Model
-model.save('aid/final_model_man.h5')
+model.save('aid/final_model_tue.h5')
