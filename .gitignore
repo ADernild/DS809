@@ -2604,4 +2604,5 @@ data
 data/
 logs/
 .ipynb_checkpoints/
+models/optimal_loop_params.h5
 aid/optimal_loop_params.h5
