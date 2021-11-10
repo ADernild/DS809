@@ -30,19 +30,41 @@ test_gen = test_datagen.flow_from_directory(
 STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
 
 model_1.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
-
 model_2.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8125
-
 
 #%%
 import numpy as np
 from keras.preprocessing import image
 
-test_path = 'bonus/dog/dog.1773.jpg' # einstein
+einstein = 'bonus/dog/dog.1773.jpg' # einstein
+cat_dog = 'bonus/dog/dog.7.jpg' # cat and dog
+cat_dog_2 = 'bonus/cat/cat.724.jpg' # cat and dog
+toy_cat = 'bonus/cat/cat.92.jpg'
 
-img_width, img_height = 200, 200
-img = image.load_img(test_path, target_size = (img_width, img_height))
-img = image.img_to_array(img)
-img = np.expand_dims(img, axis = 0)
+def image_prep(path):
+    img_width, img_height = 200, 200
+    img = image.load_img(path, target_size = (img_width, img_height))
+    img = image.img_to_array(img)
+    img = np.expand_dims(img, axis = 0)
+    return img
 
-testing = model_1.predict(img)
+if model_1.predict(image_prep(einstein)) < 0.51:
+    print("Einstein is a cat!")
+else:
+    print("Einstein is a dog!")
+
+if model_1.predict(image_prep(cat_dog)) < 0.51:
+    print("It's a cat!")
+else:
+    print("It's a dog!")
+    
+if model_1.predict(image_prep(cat_dog_2)) < 0.51:
+    print("It's a cat!")
+else:
+    print("It's a dog!")
+    
+if model_1.predict(image_prep(toy_cat)) < 0.51:
+    print("It's a cat!")
+else:
+    print("It's a dog!")
+
