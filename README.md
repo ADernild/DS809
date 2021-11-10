@@ -15,6 +15,9 @@ Feel free to fork this repository and make pull requests with improvements etc.
 
 The owners and creators of this repository is: 
 Alexander I. D. 
+
 Christine L. L.
+
 Max F. H. 
+
 MSc Students, 3rd Sem, Fall 2021
