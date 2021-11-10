@@ -16,7 +16,7 @@ from numpy import expand_dims
 #%%
 model_1 = keras.models.load_model('aid/final_model.h5')
 
-# model_2 = keras.models.load_model('aid/final_model_2.h5')
+model_2 = keras.models.load_model('aid/final_model_2.h5')
 
 #%%
 image_size = [200, 200]
@@ -36,4 +36,4 @@ STEP_SIZE_TEST=test_gen.n//test_gen.batch_size
 
 model_1.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
 
-# model_2.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
+model_2.evaluate(test_gen, steps=STEP_SIZE_TEST) # accuracy 0.8398
